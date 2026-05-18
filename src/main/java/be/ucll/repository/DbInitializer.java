@@ -30,7 +30,7 @@ public class DbInitializer {
         Cursus p2 = new Cursus("Progamming 2", 6, "Ruben Naudts");
         Cursus cn = new Cursus("Computer Networks", 6, "Pieter Hollevoet");
         Cursus goederenrecht = new Cursus("goederenrecht", 3, "Johan Pieck");
-        Cursus verbintenisrecht = new Cursus("FrontEnd", 4, "Johan Pieck");
+        Cursus verbintenisrecht = new Cursus("verbintenisRecht", 4, "Johan Pieck");
         Cursus manegemant = new Cursus("manegemant", 5, "Johan Pieck");
         List<Cursus> ti = new ArrayList<>();
         List<Cursus> rechten = new ArrayList<>();
