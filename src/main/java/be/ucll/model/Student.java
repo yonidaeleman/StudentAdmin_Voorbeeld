@@ -28,8 +28,8 @@ public class Student {
     private String password;
 
     @ManyToOne
-    @JoinColumn(name = "inschrijving_id")
-    private Inschrijving inschrijving;
+    @JoinColumn(name = "richting_id")
+    private Richting richting;
 
     protected Student() {
     }
@@ -41,23 +41,23 @@ public class Student {
         setPassword(password);
     }
 
-    public Student(String name, int age, String email, String password, Inschrijving inschrijving) {
+    public Student(String name, int age, String email, String password, Richting richting) {
         setName(name);
         setAge(age);
         setEmail(email);
         setPassword(password);
-        setInschrijving(inschrijving);
+        setrichting(richting);
     }
 
-    public Inschrijving getInschrijving() {
-        return inschrijving;
+    public Richting getrichting() {
+        return richting;
     }
 
-    public void setInschrijving(Inschrijving inschrijving) {
+    public void setrichting(Richting richting) {
         if(this.age < 18){
             throw new RuntimeException("User must be at least 18 years old to have a profile.");
         }
-        this.inschrijving = inschrijving;
+        this.richting = richting;
     }
 
     public Long getId() {

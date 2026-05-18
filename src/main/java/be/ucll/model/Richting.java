@@ -8,16 +8,13 @@ import jakarta.validation.constraints.NotBlank;
 import java.util.List;
 
 @Entity
-public class Inschrijving {
+public class Richting {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "richting kan niet leeg zijn.")
-    private String course;
-
-    @NotBlank(message = "Inschrijvings datum kan niet leeg zijn.")
-    private String date;
+    @NotBlank(message = "richting naam kan niet leeg zijn.")
+    private String name;
 
     @Min(value = 1, message = "minimum tijd van inschrijving is 1 jaar.")
     @Max(value = 6, message = "de maximum tijd is 6 jaar.")
@@ -29,29 +26,28 @@ public class Inschrijving {
 
     @ManyToMany
     @JoinTable(
-            name = "inschrijving_cursus",
-            joinColumns = @JoinColumn(name = "inschrijving_id"),
+            name = "richting_cursus",
+            joinColumns = @JoinColumn(name = "richting_id"),
             inverseJoinColumns = @JoinColumn(name = "cursus_id")
     )
     private List<Cursus> cursussen;
 
-    protected Inschrijving() {
+    protected Richting() {
     }
 
-    public Inschrijving(String course, String date, int duration, float bedrag, List<Cursus> cursussen) {
-        setCourse(course);
-        setDate(date);
+    public Richting(String name, int duration, float bedrag, List<Cursus> cursussen) {
+        setName(name);
         setDuration(duration);
         setBedrag(bedrag);
         setCursussen(cursussen);
     }
 
-    public String getCourse() {
-        return course;
+    public String getName() {
+        return name;
     }
 
-    public void setCourse(String course) {
-        this.course = course;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public List<Cursus> getCursussen() {
@@ -68,14 +64,6 @@ public class Inschrijving {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
     }
 
     public int getDuration() {

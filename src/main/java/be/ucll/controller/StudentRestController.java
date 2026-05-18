@@ -1,7 +1,7 @@
 package be.ucll.controller;
 
 import be.ucll.model.Cursus;
-import be.ucll.model.Inschrijving;
+import be.ucll.model.Richting;
 import be.ucll.model.Student;
 import be.ucll.service.StudentService;
 import jakarta.validation.Valid;
@@ -32,30 +32,30 @@ public class StudentRestController {
         return studentService.findAllStudentsOrByName(name);
     }
 
-    @GetMapping("/search/course/{course}")
-    public List<Student> findStudentsByCourse(@PathVariable String course){
-        return studentService.findByCourse(course);
+    @GetMapping("/search/cursus/{cursus}")
+    public List<Student> findStudentsByCourse(@PathVariable String cursus){
+        return studentService.findByCourse(cursus);
     }
 
-    @GetMapping("/search/admission/{admission}")
-    public List<Student> findStudentsByAdmission(@PathVariable String admission){
-        return studentService.findByAdmission(admission);
+    @GetMapping("/search/richting/{richting}")
+    public List<Student> findStudentsByRichting(@PathVariable String richting){
+        return studentService.findByRichting(richting);
     }
 
-    @GetMapping("/course")
+    @GetMapping("/cursusen")
     public List<Cursus> findAllCourses(){return studentService.findAllCourses();}
 
-    @GetMapping("/admission")
-    public List<Inschrijving> findAllAdmissions(){return studentService.findAllAdmissions();}
+    @GetMapping("/richtingen")
+    public List<Richting> findAllAdmissions(){return studentService.findAllAdmissions();}
 
-    @PostMapping("/add/students")
+    @PostMapping("/add/student")
     public Student addStudent(@Valid @RequestBody Student student){
         return studentService.addStudent(student);
     }
 
-    @PostMapping("/add/inschrijving")
-    public Inschrijving addInschrijving(@Valid @RequestBody Inschrijving inschrijving){
-        return studentService.addInschrijving(inschrijving);
+    @PostMapping("/add/richting")
+    public Richting addrichting(@Valid @RequestBody Richting richting){
+        return studentService.addRichting(richting);
     }
 
     @PostMapping("/add/cursus")
@@ -67,6 +67,17 @@ public class StudentRestController {
     public Student changeStudent(@PathVariable String name, @Valid @RequestBody Student student){
         return studentService.changeStudent(student, name);
     }
+
+    @PutMapping("/change/richting/{richting}")
+    public Richting changerichting(@PathVariable String richting, @Valid @RequestBody Richting richtingToChange){
+        return studentService.changeRichting(richting, richtingToChange);
+    }
+
+    @PutMapping("/change/cursus/{cursus}")
+    public Cursus changeCursus(@PathVariable String cursus, @Valid @RequestBody Cursus cursusToChange){
+        return studentService.changeCursus(cursus, cursusToChange);
+    }
+
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler({RuntimeException.class})

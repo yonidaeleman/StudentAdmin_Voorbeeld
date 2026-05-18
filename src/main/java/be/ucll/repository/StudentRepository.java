@@ -9,12 +9,11 @@ import java.util.Optional;
 
 @Repository
 public interface StudentRepository extends JpaRepository<Student, Long> {
-
-    List<Student> findByInschrijving_Cursussen_Name(String courseName);
-
-    List<Student> findByInschrijving_Course(String admission);
-
     List<Student> findStudentsByNameContainsIgnoreCase(String name);
 
     Optional<Student> findStudentByNameIgnoreCase(String name);
+
+    List<Student> findByRichting_Cursussen_NameIgnoreCase(String courseName);
+
+    List<Student> findByRichting_NameIgnoreCase(String richting);
 }
