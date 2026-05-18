@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/students")
@@ -65,7 +66,7 @@ public class StudentRestController {
 
     @PutMapping("/change/student/{name}")
     public Student changeStudent(@PathVariable String name, @Valid @RequestBody Student student){
-        return studentService.changeUser(student, name);
+        return studentService.changeStudent(student, name);
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)

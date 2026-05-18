@@ -6,7 +6,6 @@ import be.ucll.model.Student;
 import be.ucll.repository.CursusRepository;
 import be.ucll.repository.InschrijvingRepository;
 import be.ucll.repository.StudentRepository;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,14 +29,15 @@ public class StudentService {
 
     public List<Student> findAllStudentsOrByName(String name){
         if(!name.equals("none")){
-            return studentRepository.findStudentsByNameIgnoreCase(name);
+            return studentRepository.findStudentsByNameContainsIgnoreCase(name);
         }
         return studentRepository.findAll();
     }
 
-    public List<Student> finStudentsByName(String name) {
-        return studentRepository.findStudentsByNameIgnoreCase(name);
-    }
+    //public Optional<Student> finStudentsByName(String name) {
+    //    Student foundstudent = studentRepository.findStudentByNameContainingIgnoreCase(name).orElseThrow(() -> new RuntimeException("Student not found."));
+    //    return Optional.of(foundstudent);
+    //}
 
     public List<Student> findByCourse(String courseName) {
         return studentRepository.findByInschrijving_Cursussen_Name(courseName);
@@ -81,13 +81,14 @@ public class StudentService {
         return cursusRepository.save(cursus);
     }
 
-    public Student changeUser( Student student, String name) {
+    public Student changeStudent( Student student, String name) {
         Student foundStudent = studentRepository.findStudentByNameIgnoreCase(name).orElseThrow(() -> new RuntimeException("Student not found."));
+        Optional<Inschrijving> foundInschrijving = Optional.of(inschrijvingRepository.findInschrijvingByCourseIgnoreCase(student.getInschrijving().getCourse()).orElseThrow(() -> new RuntimeException("Inschrijving not found.")));
         foundStudent.setName(student.getName());
         foundStudent.setAge(student.getAge());
         foundStudent.setEmail(student.getEmail());
         foundStudent.setPassword(student.getPassword());
-        foundStudent.setInschrijving(student.getInschrijving());
+        foundStudent.setInschrijving(foundInschrijving.get());
         studentRepository.save(foundStudent);
         return foundStudent;
     }
