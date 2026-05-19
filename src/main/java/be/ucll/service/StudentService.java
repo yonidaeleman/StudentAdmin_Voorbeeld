@@ -136,12 +136,11 @@ public class StudentService {
     public void deleteCursus(String cursus) {
         Cursus foundCursus = cursusRepository.findCursusByNameIgnoreCase(cursus).orElseThrow(() -> new RuntimeException("Cursus not found."));
         for (Richting richting : richtingRepository.findAll()){
-            for(Cursus cursus1: richting.getCursussen()) {
                 boolean removed = richting.getCursussen().removeIf(c -> c == foundCursus);
                 if (removed) {
                     richtingRepository.save(richting);
                 }
-            }
+
         }
         cursusRepository.delete(foundCursus);
 
