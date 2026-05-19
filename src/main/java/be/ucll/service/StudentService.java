@@ -114,4 +114,36 @@ public class StudentService {
         foundCursus.setCoordinator(cursusToChange.getCoordinator());
         return cursusRepository.save(foundCursus);
     }
+
+    public void deleteStudent(String student) {
+        Student foundStudent = studentRepository.findStudentByNameIgnoreCase(student).orElseThrow(() -> new RuntimeException("Student not found."));
+        studentRepository.delete(foundStudent);
+    }
+
+    public void deleteRichting(String richting) {
+        Richting foundRichting = richtingRepository.findRichtingByNameIgnoreCase(richting).orElseThrow(() -> new RuntimeException("Richting not found."));
+        for (Student student : studentRepository.findAll()){
+            if(student.getrichting() == foundRichting){
+                student.setrichting(null);
+                studentRepository.save(student);
+            }
+        }
+        richtingRepository.delete(foundRichting);
+
+    }
+
+
+    public void deleteCursus(String cursus) {
+        Cursus foundCursus = cursusRepository.findCursusByNameIgnoreCase(cursus).orElseThrow(() -> new RuntimeException("Cursus not found."));
+        for (Richting richting : richtingRepository.findAll()){
+            for(Cursus cursus1: richting.getCursussen()) {
+                boolean removed = richting.getCursussen().removeIf(c -> c == foundCursus);
+                if (removed) {
+                    richtingRepository.save(richting);
+                }
+            }
+        }
+        cursusRepository.delete(foundCursus);
+
+    }
 }

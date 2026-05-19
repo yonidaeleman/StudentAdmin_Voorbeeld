@@ -1,5 +1,6 @@
 package be.ucll.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -25,6 +26,8 @@ public class Richting {
     private float bedrag;
 
     @ManyToMany
+    //als deze staat wordt de richting json niet getoond in postman
+    //@JsonIgnore
     @JoinTable(
             name = "richting_cursus",
             joinColumns = @JoinColumn(name = "richting_id"),

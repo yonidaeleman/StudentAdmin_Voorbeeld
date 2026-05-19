@@ -7,6 +7,8 @@ import be.ucll.service.StudentService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
@@ -77,6 +79,34 @@ public class StudentRestController {
     public Cursus changeCursus(@PathVariable String cursus, @Valid @RequestBody Cursus cursusToChange){
         return studentService.changeCursus(cursus, cursusToChange);
     }
+
+    @DeleteMapping("/delete/student/{student}")
+    public ResponseEntity<String> deleteStudent(@PathVariable String student){
+        studentService.deleteStudent(student);
+        return ResponseEntity
+                .ok()
+                .contentType(MediaType.APPLICATION_JSON)
+                .body("\"Student successfully deleted.\"");
+    }
+
+    @DeleteMapping("/delete/richting/{richting}")
+    public ResponseEntity<String> deleteRichting(@PathVariable String richting){
+        studentService.deleteRichting(richting);
+        return ResponseEntity
+                .ok()
+                .contentType(MediaType.APPLICATION_JSON)
+                .body("\"Richting successfully deleted.\"");
+    }
+
+    @DeleteMapping("/delete/cursus/{cursus}")
+    public ResponseEntity<String> deleteCursus(@PathVariable String cursus){
+        studentService.deleteCursus(cursus);
+        return ResponseEntity
+                .ok()
+                .contentType(MediaType.APPLICATION_JSON)
+                .body("\"Cursus successfully deleted.\"");
+    }
+
 
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
